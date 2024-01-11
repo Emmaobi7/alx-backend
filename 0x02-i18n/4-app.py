@@ -19,6 +19,7 @@ class Config():
 
 
 app.config.from_object(Config)
+supported_locale = ['en', 'fr']
 
 
 @babel.localeselector
@@ -26,6 +27,9 @@ def get_locale():
     """
     guess best language
     """
+    user_locale = request.args.get('locale')
+    if user_locale and user_locale in supported_locale:
+        return user_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -34,7 +38,7 @@ def index():
     """
     simple web page
     """
-    return render_template('3-index.html')
+    return render_template('4-index.html')
 
 
 if __name__ == '__main__':
